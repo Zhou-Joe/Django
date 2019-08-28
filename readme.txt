@@ -1,3 +1,1 @@
-yehh?
-actually not
-dumb xxxx xhit
+learn Django from pythonprogramming.net
