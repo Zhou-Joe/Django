@@ -2,13 +2,14 @@
 
 {% block content %}
   <div class="row">
-    {% for tut in tutorials %}
+    {% for tut in categories %}
         <div class="col s12 m6">
-          <div class="card blue-grey darken-1 hoverable">
+          <a href="{{tut.category_slug}}", style="color:#000">
+          <div class="card blue-grey darken-2 hoverable">
             <div class="card-content white-text">
-              <span class="card-title">{{tut.title}}</span>
-              <p style="font-size:70%">Published {{tut.published}}</p>
-              <p>{{tut.content|safe}}</p>
+              <span class="card-title">{{tut.tutorial_category}}</span>
+              <p style="font-size:70%">{{tut.category_summary}}</p>
+
             </div>
           </div>
         </div>

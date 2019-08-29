@@ -68,16 +68,38 @@ def login_request(request):
 def single_slug(request, single_slug):
     categories = [c.category_slug for c in TutorialCategory.objects.all()]
     if single_slug in categories:
-        return HttpResponse(f"{single_slug} is a category")
+        matching_series = TutorialSeries.objects.filter(tutorial_category__category_slug=single_slug)
+        series_urls = {}
+        for m in matching_series.all():
+            series_urls[m] = m.tutorial_series
+        return render(request=request,
+                      template_name='main/category.html',
+                      context={"tutorial_series": matching_series, "part_ones": series_urls})
+    tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
+
+    series = [s.tutorial_series for s in TutorialSeries.objects.all()]
+    if single_slug in series:
+        matching_tutorial = Tutorial.objects.filter(tutorial_series__tutorial_series=single_slug)
+        return render(request=request,
+                      template_name='main/series.html',
+                      context={"part_ones": matching_tutorial.all})
 
     tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
     if single_slug in tutorials:
-        return HttpResponse(f"{single_slug} is a Tutorial")
+        this_tutorial = Tutorial.objects.get(tutorial_slug=single_slug)
+        tut_from_series = Tutorial.objects.filter(tutorial_series__tutorial_series=this_tutorial.tutorial_series)
+        this_tut_idx = list(tut_from_series).index(this_tutorial)
+
+        return render(request=request,
+                      template_name='main/content.html',
+                      context={"tutorial": this_tutorial,
+                               "sidebar": tut_from_series,
+                               "this_tut_idx": this_tut_idx})
 
     return HttpResponse(f"'{single_slug}' does not correspond to anything we know of!")
 
 
 def homepage(request):
     return render(request=request,
-                  template_name='main/categories.html',
+                  template_name='main/home.html',
                   context={"categories": TutorialCategory.objects.all})
