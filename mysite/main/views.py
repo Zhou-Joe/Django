@@ -69,13 +69,9 @@ def single_slug(request, single_slug):
     categories = [c.category_slug for c in TutorialCategory.objects.all()]
     if single_slug in categories:
         matching_series = TutorialSeries.objects.filter(tutorial_category__category_slug=single_slug)
-        series_urls = {}
-        for m in matching_series.all():
-            series_urls[m] = m.tutorial_series
         return render(request=request,
                       template_name='main/category.html',
-                      context={"tutorial_series": matching_series, "part_ones": series_urls})
-    tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
+                      context={"part_ones": matching_series.all})
 
     series = [s.tutorial_series for s in TutorialSeries.objects.all()]
     if single_slug in series:
