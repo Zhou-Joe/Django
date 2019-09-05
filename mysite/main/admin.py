@@ -10,7 +10,8 @@ class TutorialAdmin(admin.ModelAdmin):
         ("Title/date", {'fields': ["title", "published"]}),
         ("URL", {'fields': ["tutorial_slug"]}),
         ("Series", {'fields': ["tutorial_series"]}),
-        ("Content", {"fields": ["content"]})
+        ("Content", {"fields": ["content"]}),
+        ("Icon",{"fields": ["icon"]})
     ]
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE()},
