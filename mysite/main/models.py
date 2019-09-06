@@ -9,7 +9,7 @@ class TutorialCategory(models.Model):
     tutorial_category = models.CharField(max_length=200)
     category_summary = models.CharField(max_length=200)
     category_slug = models.CharField(max_length=200, default=1)
-    category_img = models.ImageField(default=1)
+    category_img = models.ImageField(upload_to='img',blank=True)
 
 
     class Meta:

@@ -11,8 +11,12 @@ from django.shortcuts import render, redirect
 from .forms import NewUserForm
 
 
-def welcome(request):
-    return HttpResponse("pythonprogramming.net homepage! Wow so #amaze.")
+def about(request):
+    return render(request=request,
+                  template_name="main/about.html")
+def breeds(request):
+    return render(request=request,
+                  template_name="main/breeds.html")
 
 
 def register(request):
