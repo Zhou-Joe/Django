@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from main.models import Tutorial, TutorialCategory, TutorialSeries
+from main.models import Cat, Category
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
 from .forms import NewUserForm
@@ -70,31 +70,31 @@ def login_request(request):
 
 
 def single_slug(request, single_slug):
-    categories = [c.category_slug for c in TutorialCategory.objects.all()]
+    categories = [c.slug for c in Category.objects.all()]
     if single_slug in categories:
-        matching_series = TutorialSeries.objects.filter(tutorial_category__category_slug=single_slug)
+        matching_cat = Cat.objects.filter(cat_category__slug=single_slug)
+        this_cat_idx=list(categories).index(single_slug)
         return render(request=request,
                       template_name='main/category.html',
-                      context={"part_ones": matching_series.all})
+                      context={"part_ones": matching_cat.all,
+                               "sidebar": Category.objects.all(),
+                               "this_cat_idx": this_cat_idx
+                               })
 
-    series = [s.tutorial_series for s in TutorialSeries.objects.all()]
-    if single_slug in series:
-        matching_tutorial = Tutorial.objects.filter(tutorial_series__tutorial_series=single_slug)
-        return render(request=request,
-                      template_name='main/series.html',
-                      context={"part_ones": matching_tutorial.all})
 
-    tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
-    if single_slug in tutorials:
-        this_tutorial = Tutorial.objects.get(tutorial_slug=single_slug)
-        tut_from_series = Tutorial.objects.filter(tutorial_series__tutorial_series=this_tutorial.tutorial_series)
-        this_tut_idx = list(tut_from_series).index(this_tutorial)
+
+    cats = [t.slug for t in Cat.objects.all()]
+    if single_slug in cats:
+        this_cat = Cat.objects.get(slug=single_slug)
+        cat_from_category = Cat.objects.filter(cat_category__category=this_cat.cat_category)
+        this_cat_idx = list(cat_from_category).index(this_cat)
 
         return render(request=request,
                       template_name='main/content.html',
-                      context={"tutorial": this_tutorial,
-                               "sidebar": tut_from_series,
-                               "this_tut_idx": this_tut_idx})
+                      context={"cat": this_cat,
+                               "sidebar": cat_from_category,
+                               "this_cat_idx": this_cat_idx
+                      })
 
     return HttpResponse(f"'{single_slug}' does not correspond to anything we know of!")
 
@@ -102,4 +102,4 @@ def single_slug(request, single_slug):
 def homepage(request):
     return render(request=request,
                   template_name='main/home.html',
-                  context={"categories": TutorialCategory.objects.all})
+                  context={"categories": Category.objects.all()})

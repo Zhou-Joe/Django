@@ -5,11 +5,11 @@ from datetime import datetime
 # Create your models here.
 
 
-class TutorialCategory(models.Model):
-    tutorial_category = models.CharField(max_length=200)
-    category_summary = models.CharField(max_length=200)
-    category_slug = models.CharField(max_length=200, default=1)
-    category_img = models.ImageField(upload_to='img',blank=True)
+class Category(models.Model):
+    category = models.CharField(max_length=200, unique=True)
+    summary = models.CharField(max_length=200)
+    slug = models.CharField(max_length=200, default=1)
+    img = models.ImageField(upload_to='img',blank=True)
 
 
     class Meta:
@@ -17,32 +17,20 @@ class TutorialCategory(models.Model):
         verbose_name_plural = "Categories"
 
     def __str__(self):
-        return self.tutorial_category
+        return self.category
 
 
-class TutorialSeries(models.Model):
-    tutorial_series = models.CharField(max_length=200)
-
-    tutorial_category = models.ForeignKey(TutorialCategory, default=1, verbose_name="Category",
-                                          on_delete=models.SET_DEFAULT)
-    series_summary = models.CharField(max_length=200)
-
-    class Meta:
-        # otherwise we get "Tutorial Seriess in admin"
-        verbose_name_plural = "Series"
-
-    def __str__(self):
-        return self.tutorial_series
 
 
-class Tutorial(models.Model):
+class Cat(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     published = models.DateTimeField('date published')
     # https://docs.djangoproject.com/en/2.1/ref/models/fields/#django.db.models.ForeignKey.on_delete
-    tutorial_series = models.ForeignKey(TutorialSeries, default=1, verbose_name="Series", on_delete=models.SET_DEFAULT)
-    tutorial_slug = models.CharField(max_length=200, default=1)
-    icon=models.ImageField(default=1)
+    cat_category = models.ForeignKey(Category, to_field='category',default=1, verbose_name="Categories", on_delete=models.SET_DEFAULT)
+    slug = models.CharField(max_length=200, default=1)
+    icon=models.ImageField(upload_to='img',blank=True)
+    birth=models.DateField('Birthday',default=datetime.today)
 
     def __str__(self):
         return self.title

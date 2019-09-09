@@ -1,24 +1,51 @@
 {% extends 'main/header.html' %}
 
 {% block content %}
+<div class="row">
+{% for cat in part_ones %}
+    <a href="/{{cat.slug}}"><div class="col l8">
+          <div class="col s12 m6 center-on-small-only">
+            <div class="image-container">
+              <img src="media/{{cat.icon}}" class="circle responsive-img">
+              </div>
+          </div></a>
+          <div class="col s12 m3">
+            <h4>{{cat.title}}</h4>
+            <p>{{cat.content|safe}}<br>Birthday: {{cat.birth}}</p>
+          </div></div>
+    {% endfor %}
 
-    <div class="row">
 
-        {% for series in part_ones %}
 
-            <div class="col s12 m6 l4">
-                <a href="{{series.tutorial_series}}", style="color:#000">
-                    <div class="card hoverable">
-                        <div class="card-content">
-                            <div class="card-title">{{series.tutorial_series}}</div>
-                            <div class="card-title">{{series.series_summary}}</div>
-                            <!--<p style="font-size:70%">Published {{tut.tutorial_published}}</p>-->
-                            <p>{{tut.series_summary}}</p>
-                            <p>{{tut.content|safe}}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+
+<div class="col s4 m4 l4">
+            <ul class="collapsible popout">
+                {% for c in sidebar %}
+                    {% if forloop.counter0 == this_cat_idx %}
+                        <li class="active">
+                            <div class="collapsible-header">{{c.slug}}<br>(currently viewing)</div>
+                        </li>
+                    {% else %}
+                        <li>
+                            <div class="collapsible-header">{{c.category}}</div>
+                            <div class="collapsible-body">
+                                <p><a href="/{{c.slug}}"><button class="btn waves-effect waves-light right-align" style="background-color:yellow; color:black">Go</button></a></p>
+
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div></div>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}

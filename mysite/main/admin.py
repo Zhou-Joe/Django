@@ -2,15 +2,15 @@ from django.contrib import admin
 from tinymce.widgets import TinyMCE
 from django.db import models
 # Register your models here.
-from .models import Tutorial, TutorialSeries, TutorialCategory
+from .models import Cat, Category
 
 
 class TutorialAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Title/date", {'fields': ["title", "published"]}),
-        ("URL", {'fields': ["tutorial_slug"]}),
-        ("Series", {'fields': ["tutorial_series"]}),
-        ("Content", {"fields": ["content"]}),
+        ("URL", {'fields': ["slug"]}),
+        ("Content", {"fields": ["content","cat_category","birth"]}),
+
         ("Icon",{"fields": ["icon"]})
     ]
     formfield_overrides = {
@@ -18,6 +18,6 @@ class TutorialAdmin(admin.ModelAdmin):
     }
 
 
-admin.site.register(TutorialSeries)
-admin.site.register(TutorialCategory)
-admin.site.register(Tutorial, TutorialAdmin)
+
+admin.site.register(Category)
+admin.site.register(Cat, TutorialAdmin)

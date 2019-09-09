@@ -4,13 +4,6 @@
 
 
 {% load static %}
-<div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-    <div class="parallax"><img src="{% static "main/background1.png" %}"/></div>
-  </div></div>
-
-
-
 
   <div class="row">
 
@@ -24,6 +17,26 @@
         </div>
       </div>
     </div>
+
+
+
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <h1 class="header center teal-text text-lighten-2"<br><br></h1>
+        <div class="row center">
+        </div>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static "main/background1.png" %}" class="responsive-img"></div>
+  </div>
+
+
+  <div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+
 
 
 
@@ -43,40 +56,56 @@
 
 
 <div class="row">
-{% for tut in categories %}
+{% for t in categories %}
     <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="{{tut.category_img.url}}">
+            <img src="{{t.img.url}}" class="materialboxed">
 
-          <a href="{{tut.category_slug}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+          <a href="{{t.slug}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
         </div>
         <div class="card-content">
-          <p>{{tut.category_summary}}</p>
+          <p>{{t.summary}}</p>
         </div>
       </div>
     </div>
 {% endfor %}
 </div>
 
-      <div class="row">
+  <div class="card">
+    <div class="card-content">
+      <p>Certification and Honors</p>
+    </div>
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width">
+        <li class="tab"><a href="#test4">Honors</a></li>
+        <li class="tab"><a class="active" href="#test5">Certificate</a></li>
+      </ul>
+    </div>
+    <div class="row valign-wrapper">
+      <div id="test4" class="row center"><img src="{% static "main/award.jpg" %}" class="materialboxed responsive-img"></div>
+      <div id="test5"><p>no certificate as we are a backyard cattery</p></div>
+    </div>
+  </div>
 
-          <div class="row valign-wrapper">
-            <div class="col s6">
-              <img src="{% static "main/wulnut.jpg" %}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s2">
-              <span class="card-content">
-                <p class="blue-text">Wulnut won RW title in the recent match!</p>
-              </span>
-            </div>
 
-              <div class="col s6">
-              <img src="{% static "main/award.jpg" %}" alt="" class="responsive-img"> <!-- notice the "circle" class -->
-            </div>
-          </div>
 
-      </div>
+
+
+
+<div class="container">
+
+
+<div class="carousel carousel-slider">
+    <a class="carousel-item" href="#one!"><img src="{% static "main/wulnut.jpg" %}"</a>
+    <a class="carousel-item" href="#two!"><img src="{% static "main/wulnut.jpg" %}"></a>
+    <a class="carousel-item" href="#three!"><img src="{% static "main/wulnut.jpg" %}"></a>
+    <a class="carousel-item" href="#four!"><img src="{% static "main/background1.png" %}"></a>
+    <a class="carousel-item" href="#five!"><img src="{% static "main/award.jpg" %}"></a>
+  </div>
+</div>
+
+
 
 
 

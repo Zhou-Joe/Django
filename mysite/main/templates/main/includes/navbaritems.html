@@ -1,6 +1,6 @@
         <li><a href="/">主页</a></li>
         <li><a href="/about/">关于猫舍</a></li>
-        <li><a href="/kitties/">小猫找家</a></li>
+        <li><a href="/kitties">小猫找家</a></li>
         {% if user.is_authenticated %}
              <li><a href="/admin/">{{user.username|title}}</a></li>
              <li><a href="/logout/">Logout</a></li>
